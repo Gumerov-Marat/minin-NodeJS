@@ -1,11 +1,19 @@
-// глобальная функция рекваер
-/*
- функция возвращает обьект 
-*/
-const userObj = require('./user')
-const userObj1 = require('./user1')
+const http = require('http')
 
-//console.log(userObj);
 
-console.log(userObj1.user);
-userObj1.sayHello()
+//  создаем хтпп сервер
+// функция в createServer()  будет являтся хендлерром req - запрос на сервер  (res - ответ)
+const server = http.createServer((req, res) => {
+  console.log(req.url);
+  res.write('<h1>Hello fron NodeJS</h1>')
+  res.write('<h3>Hello fron NodeJS</h3>')
+  res.end(`
+  <div style = "background: red; width: 200px; height: 200px">
+    <h1>Test 1</h1>
+  </div>
+  `)
+})
+
+server.listen(3000, () => {
+  console.log('server is running...');
+})
