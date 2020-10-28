@@ -18,7 +18,7 @@
 }
 
 .course img {
-  min-width: 600px;
+  max-width: 600px;
   height: auto;
 }
 
