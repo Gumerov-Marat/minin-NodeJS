@@ -1,6 +1,5 @@
-const fs = require('fs')
 const path = require('path')
-
+const fs = require('fs')
 
 const p = path.join(
   path.dirname(process.mainModule.filename),
@@ -12,15 +11,15 @@ class Card {
   static async add(course) {
     const card = await Card.fetch()
 
-    const idx = card.courses.findIndex(c => c.id === 'id')
-    const canddidate = card.courses[idx]
+    const idx = card.courses.findIndex(c => c.id === course.id)
+    const candidate = card.courses[idx]
 
-    if (canddidate) {
+    if (candidate) {
       // курс уже есть
-      canddidate.count++
-      card.courses[idx] = canddidate
+      candidate.count++
+      card.courses[idx] = candidate
     } else {
-      //  нужно добавить
+      // нужно добавить курс
       course.count = 1
       card.courses.push(course)
     }
@@ -35,9 +34,8 @@ class Card {
           resolve()
         }
       })
-
     })
-  }
+  } 
 
   static async remove(id) {
     const card = await Card.fetch()
@@ -46,18 +44,28 @@ class Card {
     const course = card.courses[idx]
 
     if (course.count === 1) {
-      //удалить
+      // удалить
       card.courses = card.courses.filter(c => c.id !== id)
     } else {
       // изменить количество
       card.courses[idx].count--
     }
-    //пересчитываем цену
-    card.price-= course.price
+
+    card.price -= course.price
+
+    return new Promise((resolve, reject) => {
+      fs.writeFile(p, JSON.stringify(card), err => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(card)
+        }
+      })
+    })
   }
 
   static async fetch() {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       fs.readFile(p, 'utf-8', (err, content) => {
         if (err) {
           reject(err)

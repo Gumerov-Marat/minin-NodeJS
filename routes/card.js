@@ -14,7 +14,6 @@ router.delete('/remove/:id', async (req, res) => {
   res.status(200).json(card)
 })
 
-
 router.get('/', async (req, res) => {
   const card = await Card.fetch()
   res.render('card', {
