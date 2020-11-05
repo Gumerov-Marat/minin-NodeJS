@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const homeRoutes = require('./routes/home')
 const cardRoutes = require('./routes/card')
@@ -7,6 +8,7 @@ const addRoutes = require('./routes/add')
 const coursesRoutes = require('./routes/courses')
 
 const app = express()
+
 
 const hbs = exphbs.create({
   defaultLayout: 'main',
@@ -27,6 +29,28 @@ app.use('/card', cardRoutes)
 
 const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+// --MongoDB
+//const password = xX4SbCu2vekFzz20
+
+async function start() {
+
+  try {
+    const url = `mongodb+srv://Marat:xX4SbCu2vekFzz20@cluster0.qvmob.mongodb.net/<dbname>?retryWrites=true&w=majority`
+    await mongoose.connect(url, {
+      useNewUrlParser: true
+    })
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`)
+    })
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+start()
+
+
+
+
+
+
