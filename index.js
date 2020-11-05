@@ -31,11 +31,11 @@ const PORT = process.env.PORT || 3000
 
 // --MongoDB
 //const password = xX4SbCu2vekFzz20
-
+//const puzzle = <dbname>?retryWrites=true&w=majority // кусок от линка
 async function start() {
 
   try {
-    const url = `mongodb+srv://Marat:xX4SbCu2vekFzz20@cluster0.qvmob.mongodb.net/<dbname>?retryWrites=true&w=majority`
+    const url = `mongodb+srv://Marat:xX4SbCu2vekFzz20@cluster0.qvmob.mongodb.net/shop`
     await mongoose.connect(url, {
       useNewUrlParser: true
     })
