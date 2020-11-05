@@ -17,10 +17,10 @@ router.post('/', async (req, res) => {
   })
 
   try {
-     await course.save()
-     res.redirect('/courses')
+    await course.save()
+    res.redirect('/courses')
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
 })
 
